@@ -15,9 +15,13 @@ public class Spawns : MonoBehaviour
     List<GameObject> enemys = new List<GameObject>();
 
     public static Spawns instance;
-    void Start()
+    private void Awake()
     {
         instance = this;
+    }
+    void Start()
+    {
+
         SpawnTheEnemys();
         SpawnDoubleJumpObject();
     }

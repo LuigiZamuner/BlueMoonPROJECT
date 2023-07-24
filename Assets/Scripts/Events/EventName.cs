@@ -15,4 +15,6 @@ public enum EventName
 	GetDoubleJumpEvent,
 	TakeDamageEvent,
     FadeEvent,
+	AddHeartEvent,
+	GetShotterEvent,
 }

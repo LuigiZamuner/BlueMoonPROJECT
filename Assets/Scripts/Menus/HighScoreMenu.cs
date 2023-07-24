@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Retrieves and displays high score and listens for
@@ -11,31 +12,42 @@ using TMPro;
 public class HighScoreMenu : MonoBehaviour
 {
 	[SerializeField]
-	TextMeshProUGUI message;
+	GameObject message;
+    [SerializeField]
+    GameObject buttonObject;
+
+    Save save;
 
 	/// <summary>
 	/// Start is called before the first frame update
 	/// </summary>
 	void Start()
     {
-		// pause the game when added to the scene
-		Time.timeScale = 0;
-
-		// retrieve and display high score
-		if (PlayerPrefs.HasKey("High Score"))
+        buttonObject.SetActive(false);
+        message.SetActive(false);
+		save = GetComponent<Save>();
+        if (PlayerPrefs.GetString("Save") == "")
         {
-			message.text = "Your High Score: " + PlayerPrefs.GetInt("High Score");
-		}
-        else
-        {
-			message.text = "High Score\nNo games played yet";
-		}
-	}
+            message.SetActive(true);
+        }
+        else 
+        { 
+          buttonObject.SetActive(true);
+        }
 
-	/// <summary>
-	/// Handles the on click event from the quit button
-	/// </summary>
-	public void HandleQuitButtonOnClickEvent()
+    }
+
+    public void HandleLoadButtonOnClickEvent()
+    {
+        StartCoroutine(CarregarCenaDoJogo());
+        AudioManager.Play(AudioClipName.MenuButtonClick, 1);
+        AudioManager.Stop(AudioClipName.MainMenuMusic);
+        Time.timeScale = 1;
+
+
+    }
+
+    public void HandleQuitButtonOnClickEvent()
     {
         AudioManager.Play(AudioClipName.MenuButtonClick,1);
 
@@ -43,4 +55,32 @@ public class HighScoreMenu : MonoBehaviour
         Time.timeScale = 1;
 		MenuManager.GoToMenu(MenuName.Main);
 	}
+
+    IEnumerator CarregarCenaDoJogo()
+    {
+        AsyncOperation cenaAssincrona = SceneManager.LoadSceneAsync("Gameplay1");
+        cenaAssincrona.allowSceneActivation = false;
+
+        cenaAssincrona.completed += CenaCarregada;
+
+        while (!cenaAssincrona.isDone)
+        {
+            if (cenaAssincrona.progress >= 0.9f)
+            {
+                cenaAssincrona.allowSceneActivation = true;
+            }
+
+            yield return null;
+        }
+
+    }
+
+    void CenaCarregada(AsyncOperation cenaAssicrona)
+    {
+        save.LoadSave();
+
+
+        Debug.Log("Carregado com sucesso");
+    }
+
 }

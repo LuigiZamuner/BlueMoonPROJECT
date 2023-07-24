@@ -13,8 +13,7 @@ public class Skeleton : IntEventInvoker
     GameObject coinPrefab;
     [SerializeField]
     private float atackCooldown;
-    [SerializeField]
-    private int damage;
+    private int damage = 1;
     private int skeletonHealth = 3;
     private float cooldowntimer = Mathf.Infinity;
 
@@ -71,7 +70,7 @@ public class Skeleton : IntEventInvoker
     {
         if (other.gameObject.CompareTag("Damage"))
         {
-            skeletonHealth = Mathf.Max(0, skeletonHealth - 1);
+            skeletonHealth = skeletonHealth - 1;
             anim.SetTrigger("getHit");
             Destroy(other.gameObject);
             if (skeletonHealth == 0)

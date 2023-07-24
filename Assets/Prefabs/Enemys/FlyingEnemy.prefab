@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5437807761762722179}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -181,8 +181,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6ff5fb0829bd447ae8729bb9fcf25b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinPrefab: {fileID: 6762618827625504096, guid: 0ce4dc068cf7221449652f4612fdd1c3, type: 3}
+  coinPrefab: {fileID: 2004495548192718502, guid: f3e9947a3bb93bc4389b9aa6aee4a00b, type: 3}
   flyingEnemyDeathPref: {fileID: 6762618827625504096, guid: 0ce4dc068cf7221449652f4612fdd1c3, type: 3}
+  heartDropPrefab: {fileID: 39518572336103138, guid: 3551da183d8f7324eac9bdc7459fddd6, type: 3}
 --- !u!114 &5437807761762722426
 MonoBehaviour:
   m_ObjectHideFlags: 0

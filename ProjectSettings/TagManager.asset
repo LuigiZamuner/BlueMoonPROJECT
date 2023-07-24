@@ -47,6 +47,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BackGround
+    uniqueID: 88204893
+    locked: 0
   - name: BackDecoration
     uniqueID: 789822693
     locked: 0
@@ -58,4 +61,13 @@ TagManager:
     locked: 0
   - name: FrontDecoration
     uniqueID: 2468525777
+    locked: 0
+  - name: RedBackDecoration
+    uniqueID: 2090454939
+    locked: 0
+  - name: RedDecoration
+    uniqueID: 3265007815
+    locked: 0
+  - name: RedFrontDecoration
+    uniqueID: 2345199319
     locked: 0

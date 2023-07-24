@@ -43,6 +43,5 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
 		Destroy(gameObject);
 		MenuManager.GoToMenu(MenuName.Main);
-        StartCoroutine(LevelChanger.instance.MenuDisplay(false));
-    }
+	}
 }

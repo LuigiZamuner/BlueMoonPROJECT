@@ -9,6 +9,8 @@ public class FlyingEnemy : IntEventInvoker
     GameObject coinPrefab;
     [SerializeField]
     GameObject flyingEnemyDeathPref;
+    [SerializeField]
+    GameObject heartDropPrefab;
 
     FieldOfView fieldOfView;
     Follow follow;
@@ -41,10 +43,16 @@ public class FlyingEnemy : IntEventInvoker
             Destroy(other.gameObject);
             if (flyingEnemyHealth == 0)
             {
-                Destroy(gameObject);
 
+                int heartDrop = Random.Range(-2, 1);
+                Debug.Log(heartDrop);
+                Destroy(gameObject);
                 Instantiate(coinPrefab,
                 gameObject.transform.position, Quaternion.identity);
+                if(heartDrop == -1)
+                {
+                    Instantiate(heartDropPrefab,new Vector3(gameObject.transform.position.x , gameObject.transform.position.y + 2, 0) , Quaternion.identity);
+                }
 
             }
         }
