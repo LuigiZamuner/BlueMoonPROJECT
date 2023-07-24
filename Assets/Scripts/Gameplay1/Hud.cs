@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
@@ -13,24 +15,25 @@ public class Hud : MonoBehaviour
     TextMeshProUGUI coinsText;
     public int coins = 0;
 
-    // health support
-    [SerializeField]
-    Slider healthBar;
+    public Image newHeart;
+    public Sprite fullHeart;
+    public Sprite emptyHeart;
+    public int health;
+    public int numberOfHearts;
+    public List<Image> hearts = new List<Image>();
+
 
     void Start()
     {
-        // add listener for PointsAddedEvent
         EventManager.AddIntListener(EventName.CoinsAddedEvent, HandleCoinsAddedEvent);
-
+        EventManager.AddIntListener(EventName.AddHeartEvent, AddHeart);
         // initialize score text
-        coinsText.text = "Coins: " + coins;
-
-        // add listener for HealthChangedEvent
+        coinsText.text = "Souls: " + coins;
         EventManager.AddIntListener(EventName.HealthChangedEvent, HandleHealthChangedEvent);
     }
     private void Update()
     {
-        coinsText.text = "Coins: " + coins;
+        coinsText.text = "Souls: " + coins;
     }
 
     public int Coins
@@ -43,11 +46,52 @@ public class Hud : MonoBehaviour
     private void HandleCoinsAddedEvent(int points)
     {
         coins += points;
-        coinsText.text = "Coins: " + coins;
+        coinsText.text = "Souls: " + coins;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="value"></param>
     void HandleHealthChangedEvent(int value)
     {
-        healthBar.value = value;
+
+        health = value;
+        if(health > numberOfHearts)
+        {
+            health = numberOfHearts;
+        }
+        for (int i = 0; i < hearts.Count; i++)
+        {
+            if (i < health)
+            {
+                hearts[i].sprite = fullHeart;
+            }
+            else
+            {
+                hearts[i].sprite = emptyHeart;
+            }
+            if (i < numberOfHearts)
+            {
+                hearts[i].enabled = true;
+            }
+            else
+            {
+                hearts[i].enabled = false;
+            }
+        }
+       
+
     }
-}
+    public void AddHeart(int heartsNumber)
+    {
+        for (int i = 0; i < heartsNumber; i++)
+        {
+            numberOfHearts += heartsNumber;
+            hearts.Add(Instantiate(newHeart, new Vector3(hearts[3].gameObject.transform.position.x + 90f, gameObject.transform.position.y + 470f,
+            gameObject.transform.position.z), Quaternion.identity, GameObject.FindObjectOfType<Hud>().transform));
+        }
+
+    } 
+    }
+

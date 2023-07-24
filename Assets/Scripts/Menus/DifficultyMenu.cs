@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Listens for the OnClick events for the difficulty menu buttons
@@ -33,8 +34,9 @@ public class DifficultyMenu : IntEventInvoker
 	/// </summary>
 	public void HandleHardButtonOnClickEvent()
     {
+        StartCoroutine(LevelChanger.instance.SceneChanger("Gameplay1"));
         AudioManager.Play(AudioClipName.MenuButtonClick, 1);
-		MenuManager.GoToMenu(MenuName.Gameplay1);
         AudioManager.Stop(AudioClipName.MainMenuMusic);
     }
+
 }

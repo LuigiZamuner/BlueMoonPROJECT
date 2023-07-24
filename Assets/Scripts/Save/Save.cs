@@ -6,12 +6,14 @@ public class Save : MonoBehaviour
 {
     Ghost ghost;
     Hud hud;
-
-    public void SaveGame()
+    private void Start()
     {
         ghost = GameObject.FindObjectOfType<Ghost>();
         hud = GameObject.FindObjectOfType<Hud>();
+    }
 
+    public void SaveGame()
+    {
         string save = "";
         save += hud.coins.ToString()+ "|";
         save += ghost.pegouDoubleJump.ToString() + "|";
@@ -39,7 +41,6 @@ public class Save : MonoBehaviour
         Spawns.instance.SpawnTheEnemys();
 
     }
-
     private Vector3 ParseVector3(string vector3String)
     {
         string[] values = vector3String.Trim('(', ')').Split(',');

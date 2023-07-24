@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
 using UnityEngine.UIElements;
 
@@ -14,17 +15,24 @@ public class Ghost: IntEventInvoker
     private float horizontal;
     private float speed = 22f;
     private float jumpingPower = 40f;
-    public int health = 3;
+
+    [SerializeField]
+    public int health = 4;
     public int pegouDoubleJump;
+    public int pegouShotter;
     private Animator anim;
     private SpriteRenderer sr;
-    private BoxCollider2D bcd2;
     private FieldOfView fieldOfView;
     public Vector3 position;
+    private Timer shotCountdown;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private GameObject atackPrefab;
+    [SerializeField] private GameObject shotPrefab;
+
+    
+
 
     private void Start()
     {
@@ -34,12 +42,16 @@ public class Ghost: IntEventInvoker
         unityIntEvents.Add(EventName.GameOverEvent, new GameOverEvent());
         EventManager.AddIntInvoker(EventName.GameOverEvent, this);
         EventManager.AddIntListener(EventName.GetDoubleJumpEvent, HandleGetDoubleJumpEvent);
+        EventManager.AddIntListener(EventName.GetShotterEvent, HandleGetShotterEvent);
         EventManager.AddIntListener(EventName.TakeDamageEvent,TakeDamage);
+
 
         fieldOfView = GetComponent<FieldOfView>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
-        bcd2 = GetComponent<BoxCollider2D>();
+        shotCountdown = gameObject.AddComponent<Timer>();
+        shotCountdown.Duration = 5;
+        shotCountdown.Run();
     }
 
     // Update is called once per frame
@@ -95,14 +107,25 @@ public class Ghost: IntEventInvoker
             
         }
 
+        if(pegouShotter== 1)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse1) && shotCountdown.Finished)
+            {
+                StartCoroutine(ShotterAtack(0.8f));
+            }
+
+        }
+
         if (isGrounded)
         {
             rb.gravityScale = 9f;
             anim.SetBool("jump", false);
+            unityIntEvents[EventName.HealthChangedEvent].Invoke(health);
         }
         else
         {
             anim.SetBool("moving", false);
+            unityIntEvents[EventName.HealthChangedEvent].Invoke(health);
         }
 
     }
@@ -119,7 +142,7 @@ public class Ghost: IntEventInvoker
     }
     public void TakeDamage(int damage)
     {
-        health = Mathf.Max(0, health - damage);
+        health = health - damage;
         unityIntEvents[EventName.HealthChangedEvent].Invoke(health);
 
         // check for game over
@@ -139,7 +162,30 @@ public class Ghost: IntEventInvoker
     {
         pegouDoubleJump = value;
     }
+    void HandleGetShotterEvent(int value)
+    {
+        pegouShotter = value;
+    }
+    private IEnumerator ShotterAtack(float segundos)
+    {
+        anim.SetTrigger("shotting");
+        shotCountdown.Run();
+        yield return new WaitForSeconds(segundos); 
 
+        if (!sr.flipX)
+        {
+            GameObject newShot = Instantiate(shotPrefab, new Vector2(gameObject.transform.position.x + 4.5f, gameObject.transform.position.y + 2), Quaternion.identity);
+            newShot.GetComponent<Rigidbody2D>().AddForce(Vector3.right * 25, ForceMode2D.Impulse);
+            
+        }
+        else
+        {
+            GameObject newShot = Instantiate(shotPrefab, new Vector2(gameObject.transform.position.x - 5, gameObject.transform.position.y + 2), Quaternion.identity);
+            newShot.GetComponent<Rigidbody2D>().AddForce(Vector3.left * 25, ForceMode2D.Impulse);
+            newShot.GetComponent<SpriteRenderer>().flipX = true;
+            
+        }
+    }
 }
 
 
