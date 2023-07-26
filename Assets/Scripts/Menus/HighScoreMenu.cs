@@ -11,28 +11,28 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class HighScoreMenu : MonoBehaviour
 {
-	[SerializeField]
-	GameObject message;
+    [SerializeField]
+    GameObject message;
     [SerializeField]
     GameObject buttonObject;
 
     Save save;
 
-	/// <summary>
-	/// Start is called before the first frame update
-	/// </summary>
-	void Start()
+    /// <summary>
+    /// Start is called before the first frame update
+    /// </summary>
+    void Start()
     {
         buttonObject.SetActive(false);
         message.SetActive(false);
-		save = GetComponent<Save>();
+        save = GetComponent<Save>();
         if (PlayerPrefs.GetString("Save") == "")
         {
             message.SetActive(true);
         }
-        else 
-        { 
-          buttonObject.SetActive(true);
+        else
+        {
+            buttonObject.SetActive(true);
         }
 
     }
@@ -49,12 +49,12 @@ public class HighScoreMenu : MonoBehaviour
 
     public void HandleQuitButtonOnClickEvent()
     {
-        AudioManager.Play(AudioClipName.MenuButtonClick,1);
+        AudioManager.Play(AudioClipName.MenuButtonClick, 1);
 
         // unpause game and go to main menu
         Time.timeScale = 1;
-		MenuManager.GoToMenu(MenuName.Main);
-	}
+        MenuManager.GoToMenu(MenuName.Main);
+    }
 
     IEnumerator CarregarCenaDoJogo()
     {
@@ -78,8 +78,7 @@ public class HighScoreMenu : MonoBehaviour
     void CenaCarregada(AsyncOperation cenaAssicrona)
     {
         save.LoadSave();
-
-
+        Spawns.instance.DestroyTheEnemys();
         Debug.Log("Carregado com sucesso");
     }
 
