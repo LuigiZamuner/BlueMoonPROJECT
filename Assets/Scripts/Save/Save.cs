@@ -15,10 +15,11 @@ public class Save : MonoBehaviour
     public void SaveGame()
     {
         string save = "";
-        save += hud.coins.ToString()+ "|";
+        save += hud.coins.ToString() + "|";
         save += ghost.pegouDoubleJump.ToString() + "|";
         save += ghost.position.ToString() + "|";
         save += ghost.health.ToString() + "|";
+        save += ghost.pegouShotter.ToString() + "|";
 
 
         PlayerPrefs.SetString("Save", save);
@@ -31,12 +32,13 @@ public class Save : MonoBehaviour
         hud = GameObject.FindObjectOfType<Hud>();
         hud.coins = int.Parse(data[0]);
         ghost.pegouDoubleJump = int.Parse(data[1]);
-        if (int.Parse(data[1]) == 0 )
+        if (int.Parse(data[1]) == 0)
         {
             Spawns.instance.SpawnDoubleJumpObject();
         }
-        ghost.transform.position= ParseVector3(data[2]);
+        ghost.transform.position = ParseVector3(data[2]);
         ghost.health = int.Parse(data[3]);
+        ghost.pegouShotter = int.Parse(data[4]);
         Spawns.instance.DestroyTheEnemys();
         Spawns.instance.SpawnTheEnemys();
 

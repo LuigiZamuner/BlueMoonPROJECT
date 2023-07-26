@@ -5,6 +5,19 @@ using UnityEngine;
 public class PauseGame : MonoBehaviour
 {
     // Start is called before the first frame update
+    public bool isOpen = false;
+    public static PauseGame instance;
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        instance = this;
+    }
     void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -14,8 +27,9 @@ public class PauseGame : MonoBehaviour
     void Update()
     {
         // check for pausing game
-        if (Input.GetKeyDown("escape"))
+        if (Input.GetKeyDown("escape") && !isOpen)
         {
+            isOpen = true;
             MenuManager.GoToMenu(MenuName.Pause);
             AudioManager.Play(AudioClipName.PauseGame, 1);
 
