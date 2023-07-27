@@ -26,7 +26,7 @@ public class HealthTemple : IntEventInvoker
         if (other.gameObject.CompareTag("Player"))
         {
             isTrigger = false;
-            StopCoroutine(CheckInput());
+
         }
     }
     private IEnumerator CheckInput()
@@ -37,9 +37,10 @@ public class HealthTemple : IntEventInvoker
             {
                 unityIntEvents[EventName.AddHeartEvent].Invoke(1);
                 Destroy(gameObject);
-                yield break; 
+                yield break;
             }
             yield return null;
         }
     }
 }
+
