@@ -14,6 +14,11 @@ public class LevelChanger : MonoBehaviour
         {
             instance = this;
         }
+        else if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
         DontDestroyOnLoad(gameObject);
     }
     public IEnumerator MenuDisplay(bool isOpen)

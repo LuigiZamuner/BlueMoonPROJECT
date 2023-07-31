@@ -22,12 +22,12 @@ public class Ghost: IntEventInvoker
     public int pegouShotter;
     private Animator anim;
     private SpriteRenderer sr;
+    private Transform playerTransform;
     private FieldOfView fieldOfView;
     public Vector3 position;
     private Timer shotCountdown;
 
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Transform groundCheck;
     [SerializeField] private GameObject atackPrefab;
     [SerializeField] private GameObject shotPrefab;
 
@@ -45,7 +45,7 @@ public class Ghost: IntEventInvoker
         EventManager.AddIntListener(EventName.GetShotterEvent, HandleGetShotterEvent);
         EventManager.AddIntListener(EventName.TakeDamageEvent,TakeDamage);
 
-
+        playerTransform = GetComponent<Transform>();
         fieldOfView = GetComponent<FieldOfView>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
@@ -65,11 +65,11 @@ public class Ghost: IntEventInvoker
             position.x += horizontal * speed *Time.deltaTime;
             if(horizontal > 0)
             {
-                sr.flipX = false;
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
             else if (horizontal < 0)
             {
-                sr.flipX = true;
+                transform.rotation= Quaternion.Euler(0f, 180f, 0f);
             }
         }
         else
@@ -172,7 +172,7 @@ public class Ghost: IntEventInvoker
         shotCountdown.Run();
         yield return new WaitForSeconds(segundos); 
 
-        if (!sr.flipX)
+        if (transform.rotation == Quaternion.Euler(0f, 0f, 0f))
         {
             GameObject newShot = Instantiate(shotPrefab, new Vector2(gameObject.transform.position.x + 4.5f, gameObject.transform.position.y + 2), Quaternion.identity);
             newShot.GetComponent<Rigidbody2D>().AddForce(Vector3.right * 25, ForceMode2D.Impulse);

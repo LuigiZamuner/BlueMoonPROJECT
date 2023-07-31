@@ -39,10 +39,12 @@ public class HighScoreMenu : MonoBehaviour
 
     public void HandleLoadButtonOnClickEvent()
     {
+        LevelChanger.instance.windowCanvasGroup.alpha = 0;
         StartCoroutine(CarregarCenaDoJogo());
         AudioManager.Play(AudioClipName.MenuButtonClick, 1);
         AudioManager.Stop(AudioClipName.MainMenuMusic);
         Time.timeScale = 1;
+
 
 
     }

@@ -5,7 +5,6 @@ public class Elevator : MonoBehaviour
     public float minHeight;
     public float maxHeight;
     private float moveSpeed = 10f;
-
     private Transform elevatorHeight;
     private bool isPlayerOnElevator = false;
     private Vector3 targetPosition;
