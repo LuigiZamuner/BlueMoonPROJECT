@@ -88,7 +88,7 @@ public class Hud : MonoBehaviour
         for (int i = 0; i < heartsNumber; i++)
         {
             numberOfHearts += heartsNumber;
-            hearts.Add(Instantiate(newHeart, new Vector3(hearts[3].gameObject.transform.position.x + 43f, gameObject.transform.position.y + 230f,
+            hearts.Add(Instantiate(newHeart, new Vector3(hearts[3].gameObject.transform.position.x + 43f, gameObject.transform.position.y + 226f,
             gameObject.transform.position.z), Quaternion.identity, GameObject.FindObjectOfType<Hud>().transform));
         }
 

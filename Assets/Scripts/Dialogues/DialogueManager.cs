@@ -15,8 +15,6 @@ public class DialogueManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI dialogueText;
     [SerializeField]
-    private TextMeshProUGUI enterTxt;
-    [SerializeField]
     private GameObject[] choices;
 
     private TextMeshProUGUI[] choicesText;
@@ -65,7 +63,6 @@ public class DialogueManager : MonoBehaviour
         if (UnityEngine.Input.GetKeyDown(KeyCode.E))
         {
             ContinueStory();
-            enterTxt.text = "";
         }
 
     }
@@ -119,10 +116,6 @@ public class DialogueManager : MonoBehaviour
         for(int i = index; i < choices.Length; i++)
         {
             choices[i].gameObject.SetActive(false);
-        }
-        if (currentChoices.Count > 0)
-        {
-            enterTxt.text = "Enter To Select";
         }
 
         StartCoroutine(SelectFirstChoice());
