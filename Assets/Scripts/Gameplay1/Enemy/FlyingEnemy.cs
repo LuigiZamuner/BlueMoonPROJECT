@@ -45,7 +45,6 @@ public class FlyingEnemy : IntEventInvoker
             {
 
                 int heartDrop = Random.Range(-2, 1);
-                Debug.Log(heartDrop);
                 Destroy(gameObject);
                 Instantiate(coinPrefab,
                 gameObject.transform.position, Quaternion.identity);
