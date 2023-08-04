@@ -37,12 +37,12 @@ public class FieldOfView : MonoBehaviour
 
         return hit.collider != null;
     }
-    //private void OnDrawGizmos()
-    //{
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
-            //new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
+            new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
+    }
     public bool FieldOfViewEnemy()
     {
         RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * transform.localScale.x * colliderDistance,
@@ -51,11 +51,11 @@ public class FieldOfView : MonoBehaviour
 
         return hit.collider != null;
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * transform.localScale.x * colliderDistance,
-        new Vector3(boxCollider.bounds.size.x * fieldofviewrange, boxCollider.bounds.size.y * fieldofviewrange/2 + fieldofviewrange/3, boxCollider.bounds.size.z));
-    }
+    //private void OnDrawGizmos()
+    //{
+        //Gizmos.color = Color.blue;
+        //Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * transform.localScale.x * colliderDistance,
+        //new Vector3(boxCollider.bounds.size.x * fieldofviewrange, boxCollider.bounds.size.y * fieldofviewrange/2 + fieldofviewrange/3, boxCollider.bounds.size.z));
+    //}
 
 }

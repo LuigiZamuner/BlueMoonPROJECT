@@ -22,7 +22,6 @@ public class Ghost: IntEventInvoker
     public int pegouShotter;
     private Animator anim;
     private SpriteRenderer sr;
-    private Transform playerTransform;
     private FieldOfView fieldOfView;
     public Vector3 position;
     private Timer shotCountdown;
@@ -45,7 +44,6 @@ public class Ghost: IntEventInvoker
         EventManager.AddIntListener(EventName.GetShotterEvent, HandleGetShotterEvent);
         EventManager.AddIntListener(EventName.TakeDamageEvent,TakeDamage);
 
-        playerTransform = GetComponent<Transform>();
         fieldOfView = GetComponent<FieldOfView>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
@@ -57,13 +55,13 @@ public class Ghost: IntEventInvoker
     // Update is called once per frame
     void Update()
     {
-        position = transform.position;
         horizontal = Input.GetAxis("Horizontal");
         if (horizontal != 0)
         {
             anim.SetBool("moving",true);
-            position.x += horizontal * speed *Time.deltaTime;
-            if(horizontal > 0)
+            rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+
+            if (horizontal > 0)
             {
                 transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
@@ -76,7 +74,7 @@ public class Ghost: IntEventInvoker
         {
             anim.SetBool("moving", false);
         }
-        transform.position = position;
+
         if (Input.GetButtonDown("Fire1") && anim.GetBool("moving") == false)
         {
             anim.SetTrigger("idleAtack");
