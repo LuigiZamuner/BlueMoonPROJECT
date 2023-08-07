@@ -5,7 +5,7 @@ using UnityEngine;
 public class KnightBoss : IntEventInvoker
 {
     [SerializeField]
-    GameObject bossTransformationPrefab;
+    GameObject portalPrefab;
     [SerializeField]
     private float atackCooldown;
     private int damage = 1;
@@ -57,7 +57,7 @@ public class KnightBoss : IntEventInvoker
             if (cooldowntimer >= atackCooldown )
             {
                 cooldowntimer = 0;
-                Debug.Log(randomAtack);
+
                 if(randomAtack == -1)
                 {
                     anim.SetTrigger("atack1");
@@ -85,8 +85,7 @@ public class KnightBoss : IntEventInvoker
             if (bossHealth == 0)
             {
                 Destroy(gameObject);
-                Instantiate(bossTransformationPrefab,
-                gameObject.transform.position, Quaternion.identity);
+                Instantiate(portalPrefab, new Vector2(477,-30), Quaternion.identity);
 
             }
         }

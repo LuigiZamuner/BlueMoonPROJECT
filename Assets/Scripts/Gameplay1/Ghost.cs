@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -25,6 +26,8 @@ public class Ghost: IntEventInvoker
     private FieldOfView fieldOfView;
     public Vector3 position;
     private Timer shotCountdown;
+    private Timer atackCountdown;
+
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private GameObject atackPrefab;
@@ -50,6 +53,9 @@ public class Ghost: IntEventInvoker
         shotCountdown = gameObject.AddComponent<Timer>();
         shotCountdown.Duration = 5;
         shotCountdown.Run();
+        atackCountdown = gameObject.AddComponent<Timer>();
+        atackCountdown.Duration = 1f;
+        atackCountdown.Run();
     }
 
     // Update is called once per frame
@@ -75,9 +81,10 @@ public class Ghost: IntEventInvoker
             anim.SetBool("moving", false);
         }
 
-        if (Input.GetButtonDown("Fire1") && anim.GetBool("moving") == false)
+        if (Input.GetButtonDown("Fire1") && anim.GetBool("moving") == false && atackCountdown.Finished)
         {
             anim.SetTrigger("idleAtack");
+            atackCountdown.Run();
         }
 
 

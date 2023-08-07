@@ -13,6 +13,7 @@ TagManager:
   - FrenchFries
   - Coin
   - Damage
+  - Wall
   layers:
   - Default
   - TransparentFX

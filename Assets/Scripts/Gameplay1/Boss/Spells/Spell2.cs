@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Spell2 : IntEventInvoker
 {
-    private FieldOfView fieldOfView;
     private Rigidbody2D rb2D;
     // Start is called before the first frame update
     private int damage = 1;
     void Start()
     {
-        fieldOfView = GetComponent<FieldOfView>();
         rb2D = GetComponent<Rigidbody2D>();
         unityIntEvents.Add(EventName.TakeDamageEvent, new TakeDamageEvent());
         EventManager.AddIntInvoker(EventName.TakeDamageEvent, this);
@@ -30,14 +28,12 @@ public class Spell2 : IntEventInvoker
     }
     private void DamagePlayer()
     {
-        if (fieldOfView.PlayerContact())
-        {
             unityIntEvents[EventName.TakeDamageEvent].Invoke(damage);
-        }
     }
     private IEnumerator WaitForSecondsToDestroy(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         Destroy(gameObject);
+        
     }
 }

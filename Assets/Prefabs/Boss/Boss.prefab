@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ea892defa33154e87bfe8302dc2a0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossTransformationPrefab: {fileID: 0}
+  portalPrefab: {fileID: 6407660794045727478, guid: 2b65a8d229b41a54c800015b5c1d3f57, type: 3}
   atackCooldown: 1
 --- !u!114 &5729654650988474400
 MonoBehaviour:
