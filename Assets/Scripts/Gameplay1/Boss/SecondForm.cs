@@ -8,14 +8,17 @@ public class SecondForm : MonoBehaviour
     GameObject Spell1Prefab;
     [SerializeField]
     GameObject Spell2Prefab;
+    [SerializeField]
+    GameObject winMenu;
     private int[] attackXValues = { 13, 17, 21, 26, 30};
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < 12; i ++)
+        for (int i = 0; i < 13; i ++)
         {
-            int waitTime = 3 + 3 * i;
-            StartCoroutine(WaitForSecondsToInstatiate(waitTime));
+
+                int waitTime = 3 + 3 * i;
+                StartCoroutine(WaitForSecondsToInstatiate(waitTime));
         }
     }
 
@@ -31,10 +34,16 @@ public class SecondForm : MonoBehaviour
 
         int randomNumber = Random.Range(-6,6);
         int randomXIndex = Random.Range(0, attackXValues.Length);
-        int randomXIndex2 = Random.Range(0, attackXValues.Length);
+        int randomXIndex2 = Random.Range(0, attackXValues.Length); 
 
 
-        if(seconds > 21)
+        if(seconds == 39)
+        {
+            Destroy(gameObject);
+            Instantiate(winMenu);
+
+        }
+        else if(seconds > 21 && seconds < 39)
         {
             Instantiate(Spell1Prefab, new Vector3(gameObject.transform.position.x - attackXValues[randomXIndex], gameObject.transform.position.y - 6), Quaternion.identity);
             Instantiate(Spell1Prefab, new Vector3(gameObject.transform.position.x + attackXValues[randomXIndex2], gameObject.transform.position.y - 6), Quaternion.identity);

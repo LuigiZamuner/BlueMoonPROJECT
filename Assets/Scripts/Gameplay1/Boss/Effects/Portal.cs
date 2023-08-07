@@ -12,7 +12,7 @@ public class Portal : MonoBehaviour
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        StartCoroutine(WaitForSecondsToDestroy(3));
+        StartCoroutine(WaitForSecondsToDestroy(5));
     }
 
     // Update is called once per frame
@@ -24,7 +24,7 @@ public class Portal : MonoBehaviour
     private IEnumerator WaitForSecondsToDestroy(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        Instantiate(secondPartBoss, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 15), Quaternion.identity);
+        Instantiate(secondPartBoss, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 13.5f), Quaternion.identity);
         Destroy(gameObject);
     }
 }

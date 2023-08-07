@@ -55,13 +55,12 @@ public class FlyingEnemy : IntEventInvoker
 
             }
         }
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             unityIntEvents[EventName.TakeDamageEvent].Invoke(damage);
-        }   
+        }
     }
+
+
 }
 
